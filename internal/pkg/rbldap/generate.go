@@ -9,7 +9,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-// Generate takes cli context and generates user vhost for rbuser
+// Generate the Apache vhost configuration.
 func Generate(ctx *cli.Context) error {
 	rb, err := rbuser.NewRbLdap(
 		ctx.GlobalString("user"),

@@ -7,7 +7,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-// Renew a users LDAP account
+// Renew a user's LDAP account.
 func Renew(ctx *cli.Context) error {
 	rb, err := rbuser.NewRbLdap(
 		ctx.GlobalString("user"),

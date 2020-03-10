@@ -7,7 +7,7 @@ import (
 	ldap "gopkg.in/ldap.v2"
 )
 
-// SearchUser ldap for a given filter and return first user that matches
+// SearchUser searches LDAP for the first user that matches a filter.
 func (rb *RbLdap) SearchUser(filter string) (RbUser, error) {
 	users, err := rb.SearchUsers(filter)
 	if len(users) == 0 {
@@ -16,7 +16,7 @@ func (rb *RbLdap) SearchUser(filter string) (RbUser, error) {
 	return users[0], err
 }
 
-// SearchUsers ldap for a given filter and return all users that matches
+// SearchUsers searches LDAP for all users that match a filter.
 func (rb *RbLdap) SearchUsers(filter string) ([]RbUser, error) {
 	var users []RbUser
 	sr, err := rb.Conn.Search(ldap.NewSearchRequest(

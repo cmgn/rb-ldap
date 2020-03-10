@@ -7,7 +7,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-// FreeUser Check if a user name is free
+// FreeUser checks if a username is free.
 func FreeUser(ctx *cli.Context) error {
 	rb, err := rbuser.NewRbLdap(
 		ctx.GlobalString("user"),

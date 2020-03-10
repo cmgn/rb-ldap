@@ -7,7 +7,7 @@ import (
 	ldap "gopkg.in/ldap.v2"
 )
 
-// Update a user in ldap
+// Update a user in LDAP.
 func (rb *RbLdap) Update(user RbUser) error {
 	modification := ldap.NewModifyRequest(fmt.Sprintf("uid=%s,ou=ldap,o=redbrick", user.UID))
 	now := time.Now()

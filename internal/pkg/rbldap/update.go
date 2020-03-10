@@ -7,7 +7,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-// Update a user in ldap
+// Update updates a user in LDAP.
 func Update(ctx *cli.Context) error {
 	rb, err := rbuser.NewRbLdap(
 		ctx.GlobalString("user"),

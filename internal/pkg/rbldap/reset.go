@@ -5,7 +5,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-// Reset a users LDAP Password
+// Reset a user's LDAP password.
 func Reset(ctx *cli.Context) error {
 	if ctx.GlobalBool("dry-run") {
 		return errNotImplemented

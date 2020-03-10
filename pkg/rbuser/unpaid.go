@@ -6,8 +6,8 @@ import (
 	ldap "gopkg.in/ldap.v2"
 )
 
-// DeleteUnPaid Delete unpaid accounts that have expired their grace period
-func (rb *RbLdap) DeleteUnPaid() error {
+// DeleteUnpaidUsers Delete unpaid accounts that have expired their grace period
+func (rb *RbLdap) DeleteUnpaidUsers() error {
 	users, err := rb.SearchUsers("(&((yearspaid=-1))(|(usertype=member)(usertype=associate)(usertype=staff))")
 	if err != nil {
 		return err
@@ -20,8 +20,8 @@ func (rb *RbLdap) DeleteUnPaid() error {
 	return nil
 }
 
-// DisableUnPaid Disable unpaid accounts
-func (rb *RbLdap) DisableUnPaid(admin string) error {
+// DisableUnpaidUsers Disable unpaid accounts
+func (rb *RbLdap) DisableUnpaidUsers(admin string) error {
 	users, err := rb.SearchUsers("(&((yearspaid=0))(|(usertype=member)(usertype=associate)(usertype=staff))")
 	if err != nil {
 		return err

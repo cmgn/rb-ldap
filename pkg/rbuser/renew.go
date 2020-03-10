@@ -7,7 +7,7 @@ import (
 	ldap "gopkg.in/ldap.v2"
 )
 
-// Renew a Users Account, variables yearsPaid will be set too 1
+// Renew sets a user's `yearsPaid` to 1.
 func (rb *RbLdap) Renew(user RbUser) error {
 	modification := ldap.NewModifyRequest(fmt.Sprintf("uid=%s,ou=ldap,o=redbrick", user.UID))
 	now := time.Now()

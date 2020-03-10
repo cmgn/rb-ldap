@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-// CreateHome Create a users home dir and chown it to them
+// CreateHome creates a user's home directory and makes them the owner.
 func (user *RbUser) CreateHome() error {
 	if err := os.MkdirAll(user.HomeDirectory, os.ModePerm); err != nil {
 		return err
@@ -24,7 +24,7 @@ func (user *RbUser) CreateHome() error {
 	return os.Chown(user.HomeDirectory, user.UIDNumber, user.GidNumber)
 }
 
-// CreateWebDir Create a users Web dir and chown it to them
+// CreateHome creates a user's web directory and makes them the owner.
 func (user *RbUser) CreateWebDir() error {
 	folder := fmt.Sprintf("/webtree/%d/%s", []rune(user.UID)[0], user.UID)
 	if err := os.MkdirAll(folder, os.ModePerm); err != nil {
@@ -33,12 +33,12 @@ func (user *RbUser) CreateWebDir() error {
 	return os.Chown(folder, user.UIDNumber, user.GidNumber)
 }
 
-// LinkPublicHTML Link a users Webdir to their home dir
+// LinkPublicHTML link's a user's web directory to public_html in their home directory.
 func (user *RbUser) LinkPublicHTML() error {
 	return os.Symlink(fmt.Sprintf("/webtree/%d/%s", []rune(user.UID)[0], user.UID), fmt.Sprintf("%s/public_html", user.HomeDirectory))
 }
 
-// MigrateHome migrate a users home dir and chown it to them
+// MigrateHome migrates a user's home directory and makes them the owner.
 func (user *RbUser) MigrateHome(newHome string) error {
 	if err := os.Rename(user.HomeDirectory, newHome); err != nil {
 		return err
@@ -47,17 +47,17 @@ func (user *RbUser) MigrateHome(newHome string) error {
 	return user.LinkPublicHTML()
 }
 
-// DelWebDir Delete a users web dir
+// DelWebDir deletes a user's web directory.
 func (user *RbUser) DelWebDir() error {
 	return os.RemoveAll(fmt.Sprintf("/webtree/%d/%s", []rune(user.UID)[0], user.UID))
 }
 
-// DelHomeDir Delete a users home dir
+// DelHomeDir deletes a user's home directory.
 func (user *RbUser) DelHomeDir() error {
 	return os.RemoveAll(user.HomeDirectory)
 }
 
-// DelExtraFiles delete leftover files from user
+// DelExtraFiles deletes any leftover files owned by a user.
 func (user *RbUser) DelExtraFiles() error {
 	for _, file := range []string{
 		"/local/share/agreement/statedir/%s",

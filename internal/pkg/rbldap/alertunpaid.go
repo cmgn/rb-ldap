@@ -5,8 +5,8 @@ import (
 	"github.com/urfave/cli"
 )
 
-// AlertUnPaid emails all unpaid users warning about account diable
-func AlertUnPaid(ctx *cli.Context) error {
+// AlertUnpaidUsers sends a warning email to all users that have not paid.
+func AlterUnpaidUsers(ctx *cli.Context) error {
 	if ctx.GlobalBool("dry-run") {
 		return errNotImplemented
 	}
@@ -25,11 +25,11 @@ func AlertUnPaid(ctx *cli.Context) error {
 		return err
 	}
 	defer rb.Conn.Close()
-	return rb.AlertUnPaid()
+	return rb.AlertUnpaidUsers()
 }
 
-// DisableUnPaid diable all unpaid users
-func DisableUnPaid(ctx *cli.Context) error {
+// DisableUnpaidUsers disables all user accounts that have not paid.
+func DisableUnpaidUsers(ctx *cli.Context) error {
 	if ctx.GlobalBool("dry-run") {
 		return errNotImplemented
 	}
@@ -52,11 +52,11 @@ func DisableUnPaid(ctx *cli.Context) error {
 	if err != nil {
 		return err
 	}
-	return rb.DisableUnPaid(admin)
+	return rb.DisableUnpaidUsers(admin)
 }
 
-// DeleteUnPaid emails all unpaid users warning about account diable
-func DeleteUnPaid(ctx *cli.Context) error {
+// DeleteUnpaidUsers deletes all user accounts that have not paid.
+func DeleteUnpaidUsers(ctx *cli.Context) error {
 	if ctx.GlobalBool("dry-run") {
 		return errNotImplemented
 	}
@@ -75,5 +75,5 @@ func DeleteUnPaid(ctx *cli.Context) error {
 		return err
 	}
 	defer rb.Conn.Close()
-	return rb.DeleteUnPaid()
+	return rb.DeleteUnpaidUsers()
 }

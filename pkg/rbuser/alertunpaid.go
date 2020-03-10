@@ -8,8 +8,8 @@ import (
 	gomail "gopkg.in/gomail.v2"
 )
 
-// AlertUnPaid emails all member, associate, & staff, with yearsPaid of 0 to tell them they are unpaid and remind them to renew
-func (rb *RbLdap) AlertUnPaid() error {
+// AlertUnpaidUsers emails all member, associate, & staff, with yearsPaid of 0 to tell them they are unpaid and remind them to renew
+func (rb *RbLdap) AlertUnpaidUsers() error {
 	users, err := rb.SearchUsers("(&(|(yearspaid=0)(yearspaid=-1))(|(usertype=member)(usertype=associate)(usertype=staff))")
 	if err != nil {
 		return err

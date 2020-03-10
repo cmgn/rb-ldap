@@ -8,7 +8,7 @@ import (
 	ldap "gopkg.in/ldap.v2"
 )
 
-// NewYear to be run at the start of each year. Sets yearsPaid to 0 and set nood to false
+// NewYear sets `yearsPaid` to 0 for all users, and sets `newbie` to false.
 func (rb *RbLdap) NewYear(admin string) error {
 	users, err := rb.SearchUsers("(|(usertype=member)(usertype=associate)(usertype=staff))")
 	if err != nil {

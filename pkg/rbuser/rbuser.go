@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// RbUser is the redbric ldap user
+// RbUser is a user in RedBrick's LDAP.
 type RbUser struct {
 	UID              string
 	UserType         string
@@ -34,12 +34,12 @@ type RbUser struct {
 	ShadowLastChange int
 }
 
-// Vhost reutrn apache  macro template
+// Vhost returns the user's Apache macro template.
 func (u *RbUser) Vhost() string {
 	return fmt.Sprintf("use VHost /storage/webtree/%s/%s %s %s %s", string([]rune(u.UID)[0]), u.UID, u.UID, u.UserType, u.UID)
 }
 
-// PrettyPrint output user info to command line
+// PrettyPrint prints a user's information to stdout.
 func (u *RbUser) PrettyPrint() error {
 	const output = `User Information
 ================

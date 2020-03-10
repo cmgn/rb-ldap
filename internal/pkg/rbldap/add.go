@@ -7,7 +7,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-// Add a user to ldap
+// Add a user to LDAP.
 func Add(ctx *cli.Context) error {
 	rb, err := rbuser.NewRbLdap(
 		ctx.GlobalString("user"),

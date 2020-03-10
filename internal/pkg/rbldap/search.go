@@ -10,7 +10,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-// Search command for cli app
+// Search LDAP for all entries matching a filter.
 func Search(ctx *cli.Context) error {
 	if ctx.NArg() != 0 {
 		fmt.Fprintf(os.Stderr, "\n")

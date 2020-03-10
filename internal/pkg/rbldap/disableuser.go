@@ -5,7 +5,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-// DisableUser disable a users ldap account
+// DisableUser disable a user's LDAP account.
 func DisableUser(ctx *cli.Context) error {
 	rb, err := rbuser.NewRbLdap(
 		ctx.GlobalString("user"),
@@ -38,8 +38,8 @@ func DisableUser(ctx *cli.Context) error {
 	return rb.DisableUser(user)
 }
 
-// RenableUser renable a users ldap account
-func RenableUser(ctx *cli.Context) error {
+// EnableUser enables a user's LDAP account.
+func EnableUser(ctx *cli.Context) error {
 	rb, err := rbuser.NewRbLdap(
 		ctx.GlobalString("user"),
 		ctx.GlobalString("password"),

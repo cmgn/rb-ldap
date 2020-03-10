@@ -6,7 +6,7 @@ import (
 	ldap "gopkg.in/ldap.v2"
 )
 
-// LdapConf Server object used for connecting to server
+// LdapConf provides a medium for connecting to a LDAP server.
 type ldapConf struct {
 	user     string
 	password string
@@ -15,7 +15,7 @@ type ldapConf struct {
 	Conn     *ldap.Conn
 }
 
-// Connect to ldap database
+// Connect to the LDAP server.
 func (conf *ldapConf) connect() error {
 	l, err := ldap.Dial("tcp", fmt.Sprintf("%s:%d", conf.host, conf.port))
 	if err != nil {

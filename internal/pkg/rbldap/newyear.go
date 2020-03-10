@@ -5,7 +5,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-// NewYear run new year migration on ldap
+// NewYear runs a new year migration.
 func NewYear(ctx *cli.Context) error {
 	if ctx.GlobalBool("dry-run") {
 		return errNotImplemented

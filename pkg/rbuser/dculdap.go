@@ -9,12 +9,12 @@ import (
 	ldap "gopkg.in/ldap.v2"
 )
 
-// DcuLdap Server object used for connecting to DCU AD
+// DcuLdap provides a medium for communicating with DCU's AD server.
 type DcuLdap struct {
 	*ldapConf
 }
 
-// NewDcuLdap create ldap connection to DCU AD
+// NewDcuLdap creates a connection to DCU's AD server.
 func NewDcuLdap(user, password, host string, port int) (*DcuLdap, error) {
 	dcu := DcuLdap{
 		&ldapConf{
@@ -27,7 +27,7 @@ func NewDcuLdap(user, password, host string, port int) (*DcuLdap, error) {
 	return &dcu, dcu.connect()
 }
 
-// Search dcu ldap for a given filter and return first user that matches
+// Search DCU's AD server for the first user matching a given filter.
 func (dcu *DcuLdap) Search(filter string) (RbUser, error) {
 	sr, err := dcu.Conn.Search(ldap.NewSearchRequest(
 		"o=ad,o=dcu,o=ie",

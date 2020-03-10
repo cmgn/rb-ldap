@@ -6,7 +6,7 @@ import (
 	ldap "gopkg.in/ldap.v2"
 )
 
-// Generate user vhost conf from ldap
+// Generate the Apache vhost configuration.
 func (rb *RbLdap) Generate() ([]string, error) {
 	var vhosts []string
 	searchRequest := ldap.NewSearchRequest(

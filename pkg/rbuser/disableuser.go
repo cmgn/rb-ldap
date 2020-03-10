@@ -1,23 +1,23 @@
 package rbuser
 
-// DisableUser disable an account from ldap
+// DisableUser disables a user's LDAP account.
 func (rb *RbLdap) DisableUser(user RbUser) error {
 	user.LoginShell = noLoginShell
 	return rb.Update(user)
 }
 
-// ExpireUser disable an account from ldap
+// ExpireUser disables a user's LDAP account.
 func (rb *RbLdap) ExpireUser(user RbUser) error {
 	user.LoginShell = expiredShell
 	return rb.Update(user)
 }
 
-// RenableUser renable an account from ldap
+// EnableUser enables a user's LDAP account.
 func (rb *RbLdap) RenableUser(user RbUser) error {
 	return rb.ResetShell(user)
 }
 
-// ResetShell reset a users shell
+// ResetShell resets a user's shell.
 func (rb *RbLdap) ResetShell(user RbUser) error {
 	user.LoginShell = defaultShell
 	return rb.Update(user)

@@ -2,13 +2,13 @@ package rbuser
 
 import gomail "gopkg.in/gomail.v2"
 
-// RbLdap Server object used for connecting to server
+// RbLdap provides a medium for communicating with RedBrick's LDAP server.
 type RbLdap struct {
 	*ldapConf
 	Mail *gomail.Dialer
 }
 
-// NewRbLdap create ldap connection to Redbrick LDAP
+// NewRbLdap creates a connection to RedBrick's LDAP server.
 func NewRbLdap(user, password, host string, port int, smtp string) (*RbLdap, error) {
 	rb := RbLdap{
 		&ldapConf{

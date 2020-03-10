@@ -9,7 +9,7 @@ import (
 	ldap "gopkg.in/ldap.v2"
 )
 
-// Add a user to ldap
+// Add a user to LDAP.
 func (rb *RbLdap) Add(user RbUser, mailUser bool) error {
 	addition := ldap.NewAddRequest(fmt.Sprintf("uid=%s,ou=ldap,o=redbrick", user.UID))
 	now := time.Now()
