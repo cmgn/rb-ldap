@@ -8,17 +8,17 @@ import (
 )
 
 // SearchUser searches LDAP for the first user that matches a filter.
-func (rb *RbLdap) SearchUser(filter string) (RbUser, error) {
+func (rb *RbLdap) SearchUser(filter string) (User, error) {
 	users, err := rb.SearchUsers(filter)
 	if len(users) == 0 {
-		return RbUser{}, err
+		return User{}, err
 	}
 	return users[0], err
 }
 
 // SearchUsers searches LDAP for all users that match a filter.
-func (rb *RbLdap) SearchUsers(filter string) ([]RbUser, error) {
-	var users []RbUser
+func (rb *RbLdap) SearchUsers(filter string) ([]User, error) {
+	var users []User
 	sr, err := rb.Conn.Search(ldap.NewSearchRequest(
 		"ou=accounts,o=redbrick",
 		ldap.ScopeSingleLevel, ldap.NeverDerefAliases,
@@ -42,7 +42,7 @@ func (rb *RbLdap) SearchUsers(filter string) ([]RbUser, error) {
 		shadow, _ := strconv.Atoi(entry.GetAttributeValue("shadowLastChange"))
 		created, _ := time.Parse(timeLayout, entry.GetAttributeValue("created"))
 		birthday, _ := time.Parse(timeLayout, entry.GetAttributeValue("birthday"))
-		users = append(users, RbUser{
+		users = append(users, User{
 			UID:              entry.GetAttributeValue("uid"),
 			UserType:         entry.GetAttributeValue("objectClass"),
 			ObjectClass:      entry.GetAttributeValues("objectClass"),

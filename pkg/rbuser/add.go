@@ -10,7 +10,7 @@ import (
 )
 
 // Add a user to LDAP.
-func (rb *RbLdap) Add(user RbUser, mailUser bool) error {
+func (rb *RbLdap) Add(user User, mailUser bool) error {
 	addition := ldap.NewAddRequest(fmt.Sprintf("uid=%s,ou=ldap,o=redbrick", user.UID))
 	now := time.Now()
 	uidNumber, err := rb.findAvailableUID()

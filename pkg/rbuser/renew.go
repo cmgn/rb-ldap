@@ -8,7 +8,7 @@ import (
 )
 
 // Renew sets a user's `yearsPaid` to 1.
-func (rb *RbLdap) Renew(user RbUser) error {
+func (rb *RbLdap) Renew(user User) error {
 	modification := ldap.NewModifyRequest(fmt.Sprintf("uid=%s,ou=ldap,o=redbrick", user.UID))
 	now := time.Now()
 	modification.Replace("course", []string{user.Course})

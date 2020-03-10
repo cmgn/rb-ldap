@@ -28,7 +28,7 @@ func NewDcuLdap(user, password, host string, port int) (*DcuLdap, error) {
 }
 
 // Search DCU's AD server for the first user matching a given filter.
-func (dcu *DcuLdap) Search(filter string) (RbUser, error) {
+func (dcu *DcuLdap) Search(filter string) (User, error) {
 	sr, err := dcu.Conn.Search(ldap.NewSearchRequest(
 		"o=ad,o=dcu,o=ie",
 		ldap.ScopeWholeSubtree, ldap.NeverDerefAliases,
@@ -36,16 +36,16 @@ func (dcu *DcuLdap) Search(filter string) (RbUser, error) {
 		[]string{"employeeNumber", "displayName", "mail", "physicalDeliveryOfficeName", "distinguishedName"}, nil,
 	))
 	if err != nil {
-		return RbUser{}, err
+		return User{}, err
 	}
 	for _, entry := range sr.Entries {
 		dcuID, _ := strconv.Atoi(entry.GetAttributeValue("employeeNumber"))
 		course, year := splitCourseYear(entry.GetAttributeValue("physicalDeliveryOfficeName"))
 		userType, userTypeErr := getUserType(entry.GetAttributeValue("distinguishedName"))
 		if userTypeErr != nil {
-			return RbUser{}, userTypeErr
+			return User{}, userTypeErr
 		}
-		return RbUser{
+		return User{
 			CN:       entry.GetAttributeValue("displayName"),
 			Altmail:  entry.GetAttributeValue("mail"),
 			UserType: userType,
@@ -54,7 +54,7 @@ func (dcu *DcuLdap) Search(filter string) (RbUser, error) {
 			Year:     year,
 		}, nil
 	}
-	return RbUser{}, err
+	return User{}, err
 }
 
 func splitCourseYear(courseYear string) (string, int) {

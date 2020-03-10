@@ -23,7 +23,7 @@ func (rb *RbLdap) AlertUnpaidUsers() error {
 	return nil
 }
 
-func (rb *RbLdap) mailUnPaidWarning(user RbUser) error {
+func (rb *RbLdap) mailUnPaidWarning(user User) error {
 	const email = `Hey there,
 It's that time again to renew your Redbrick account!
 Membership prices, as set by the SLC, are as follows:

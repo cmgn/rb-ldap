@@ -8,7 +8,7 @@ import (
 )
 
 // Update a user in LDAP.
-func (rb *RbLdap) Update(user RbUser) error {
+func (rb *RbLdap) Update(user User) error {
 	modification := ldap.NewModifyRequest(fmt.Sprintf("uid=%s,ou=ldap,o=redbrick", user.UID))
 	now := time.Now()
 	modification.Replace("cn", []string{user.CN})

@@ -7,7 +7,7 @@ import (
 	gomail "gopkg.in/gomail.v2"
 )
 
-func (rb *RbLdap) mailAccountUpdate(user RbUser) error {
+func (rb *RbLdap) mailAccountUpdate(user User) error {
 	const email = `
 {{ if .Newbie }}
 Welcome to Redbrick, the DCU Networking Society! Thank you for joining.

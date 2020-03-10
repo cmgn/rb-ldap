@@ -36,7 +36,7 @@ func (rb *RbLdap) DisableUnpaidUsers(admin string) error {
 }
 
 // DeleteUser delete a users ldap account and home and web dir
-func (rb *RbLdap) DeleteUser(user RbUser) error {
+func (rb *RbLdap) DeleteUser(user User) error {
 	if user.YearsPaid >= 0 {
 		return nil
 	}

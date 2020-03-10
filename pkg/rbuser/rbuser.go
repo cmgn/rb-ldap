@@ -7,8 +7,8 @@ import (
 	"time"
 )
 
-// RbUser is a user in RedBrick's LDAP.
-type RbUser struct {
+// User is a user in RedBrick's LDAP.
+type User struct {
 	UID              string
 	UserType         string
 	ObjectClass      []string
@@ -35,12 +35,12 @@ type RbUser struct {
 }
 
 // Vhost returns the user's Apache macro template.
-func (u *RbUser) Vhost() string {
+func (u *User) Vhost() string {
 	return fmt.Sprintf("use VHost /storage/webtree/%s/%s %s %s %s", string([]rune(u.UID)[0]), u.UID, u.UID, u.UserType, u.UID)
 }
 
 // PrettyPrint prints a user's information to stdout.
-func (u *RbUser) PrettyPrint() error {
+func (u *User) PrettyPrint() error {
 	const output = `User Information
 ================
 {{ with .UID }}uid: {{ . }}
