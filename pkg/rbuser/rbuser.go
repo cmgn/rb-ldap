@@ -71,3 +71,69 @@ func (u *User) PrettyPrint() error {
 	t := template.Must(template.New("user").Parse(output))
 	return t.Execute(os.Stdout, u)
 }
+
+// CreateHome creates a user's home directory and makes them the owner.
+func (u *User) CreateHome() error {
+	if err := os.MkdirAll(u.HomeDirectory, os.ModePerm); err != nil {
+		return err
+	}
+	file, err := os.Create(fmt.Sprintf("%s/.forward", u.HomeDirectory))
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	if _, err := file.WriteString(fmt.Sprintf("%s\n", u.Altmail)); err != nil {
+		return err
+	}
+	if err := file.Sync(); err != nil {
+		return err
+	}
+	return os.Chown(u.HomeDirectory, u.UIDNumber, u.GidNumber)
+}
+
+// CreateHome creates a user's web directory and makes them the owner.
+func (u *User) CreateWebDir() error {
+	folder := fmt.Sprintf("/webtree/%d/%s", []rune(u.UID)[0], u.UID)
+	if err := os.MkdirAll(folder, os.ModePerm); err != nil {
+		return err
+	}
+	return os.Chown(folder, u.UIDNumber, u.GidNumber)
+}
+
+// LinkPublicHTML link's a user's web directory to public_html in their home directory.
+func (u *User) LinkPublicHTML() error {
+	return os.Symlink(fmt.Sprintf("/webtree/%d/%s", []rune(u.UID)[0], u.UID), fmt.Sprintf("%s/public_html", u.HomeDirectory))
+}
+
+// MigrateHome migrates a user's home directory and makes them the owner.
+func (u *User) MigrateHome(newHome string) error {
+	if err := os.Rename(u.HomeDirectory, newHome); err != nil {
+		return err
+	}
+	u.HomeDirectory = newHome
+	return u.LinkPublicHTML()
+}
+
+// DelWebDir deletes a user's web directory.
+func (u *User) DelWebDir() error {
+	return os.RemoveAll(fmt.Sprintf("/webtree/%d/%s", []rune(u.UID)[0], u.UID))
+}
+
+// DelHomeDir deletes a user's home directory.
+func (u *User) DelHomeDir() error {
+	return os.RemoveAll(u.HomeDirectory)
+}
+
+// DelExtraFiles deletes any leftover files owned by a user.
+func (u *User) DelExtraFiles() error {
+	for _, file := range []string{
+		"/local/share/agreement/statedir/%s",
+		"/var/mail/%s",
+		"/var/spool/cron/crontabs/%s",
+	} {
+		if err := os.Remove(fmt.Sprintf(file, u.UID)); err != nil {
+			return err
+		}
+	}
+	return nil
+}
